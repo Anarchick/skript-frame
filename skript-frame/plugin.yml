@@ -1,0 +1,6 @@
+name: Skript-Frame
+author: Anarchick
+description: A skript addon for image on item frames
+version: 1.0
+main: fr.anarchick.skriptframe.SkriptFrame
+depend: [Skript]
