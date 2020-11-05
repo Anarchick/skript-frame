@@ -30,3 +30,4 @@ command /test:
 - Create a new map item
 - Generate a treasure map
 - Get push or pull transport stream video
+- add support for gif
