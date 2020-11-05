@@ -5,5 +5,7 @@
 	<classpathentry kind="lib" path="C:/Users/aeim/Documents/Eclipse/external jar/Skript-2.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/aeim/Documents/Eclipse/external jar/spigot-1.16.3.jar"/>
 	<classpathentry kind="lib" path="org.eclipse.jdt.annotation_2.2.600.v20200408-1511.jar"/>
+	<classpathentry kind="lib" path="C:/Users/aeim/Documents/Eclipse/external jar/ProtocolLib-482.jar"/>
+	<classpathentry kind="lib" path="C:/Users/aeim/Documents/Eclipse/external jar/BKCommonLib-1.16.3-v2-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

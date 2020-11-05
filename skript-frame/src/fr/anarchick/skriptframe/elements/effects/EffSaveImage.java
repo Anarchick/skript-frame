@@ -16,33 +16,26 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.AsyncEffect;
 import ch.njol.util.Kleenean;
-import fr.anarchick.skriptframe.util.AsyncEffect;
 
 @Name("Save image")
 @Description("Save an image as a file")
 @Examples({
-    "# /!\\ if the file already exist, it will be replaced /!\\ \n\n" +
+    "# /!\\ if the file already exist, it will be replaced /!\\ \n" +
+	"# /!\\ You can't use a local variable in this effect /!\\ \n" +
 
-    "command download: <string>\n" +
+    "command download: <string> <string>\n" +
         "\ttrigger:\n" +
-        "\t\tcopy file path \"plugins/Skript/scrips/MyAwesomeScript.sk\" to file path \"plugins/Skript/scrips/MyAwesomeScriptCopy.sk\"\n" +
-        "\t\tbroadcast \"Copied!\"",
-
-    "# If you need to wait the end of the effect before execute a part of your code, you can\n" +
-    "# use this effect as a section effect.\n" + 
-    "# The code after this effect section will be executed when the effect section has finished to be executed.\n\n" +
-    "command copy:\n" +
-        "\ttrigger:\n" +
-        "\t\tcopy file path \"plugins/Skript/scrips/MyAwesomeScript.sk\" to file path \"plugins/Skript/scrips/MyAwesomeScriptCopy.sk\":\n" +
-        "\t\t\tbroadcast \"Copied!\""
+        	"\t\tset {image} to image from url arg-1\n" +
+        	"\t\tsave image {image} at \"plugins/images/%arg-2%.png\""
 })
 @Since("1.0")
 
 public class EffSaveImage extends AsyncEffect {
 
 	static {
-		registerAsyncEffect(EffSaveImage.class, "(save|write) image %bufferedimage% at %string%");
+		Skript.registerEffect(EffSaveImage.class, "(save|write) image %~bufferedimage% at %string%");
     }
 	
 	private Expression<BufferedImage> image;
@@ -50,7 +43,7 @@ public class EffSaveImage extends AsyncEffect {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	protected boolean initAsync(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parser) {
+	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parser) {
 		image = (Expression<BufferedImage>) exprs[0];
 		path = (Expression<String>) exprs[1];
 		return true;
@@ -62,15 +55,15 @@ public class EffSaveImage extends AsyncEffect {
 	}
 
 	@Override
-	protected void executeAsync(Event e) {
+	protected void execute(Event e) {
 		BufferedImage img = image.getSingle(e);
 		String p = path.getSingle(e);
 		if (img != null || p != null) {
-			// Only PNG is supported now
+			// Only PNG is supported for now
 			String format = "png";
 			try {
 				ImageIO.write(img, format, new File(p));
-			} catch (IOException ex) {;
+			} catch (IOException ex) {
 				Skript.exception(ex);
 			}
 		}

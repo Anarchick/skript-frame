@@ -2,9 +2,6 @@ package fr.anarchick.skriptframe.elements.expressions;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
-
-import javax.imageio.ImageIO;
 
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -15,12 +12,12 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import ch.njol.util.coll.CollectionUtils;
+import fr.anarchick.skriptframe.map.MapsManager;
 
-public class ExprImageFromURL extends SimpleExpression<BufferedImage> {
+public class ExprImageURL extends SimpleExpression<BufferedImage> {
 
 	static {
-	       Skript.registerExpression(ExprImageFromURL.class, BufferedImage.class, ExpressionType.SIMPLE, "[the] image [from] url %string%");
+	       Skript.registerExpression(ExprImageURL.class, BufferedImage.class, ExpressionType.SIMPLE, "[the] image [from] url %string%");
 	   }
 	
 	private Expression<String> url;
@@ -50,15 +47,12 @@ public class ExprImageFromURL extends SimpleExpression<BufferedImage> {
 	@Override
 	@Nullable
 	protected BufferedImage[] get(Event e) {
-		String u = url.getSingle(e);
-		if (u != null) {
-			try {
-				return CollectionUtils.array((ImageIO.read(new URL(u))));
-			} catch (IOException ex) {
-				Skript.exception(ex);
-			}
+		try {
+			return new BufferedImage[] {MapsManager.imageURL(url.getSingle(e))};
+		} catch (IOException ex) {
+			Skript.exception(ex);
+			return null;
 		}
-		return null;
 	}
 
 }
