@@ -31,3 +31,4 @@ command /test:
 - Generate a treasure map
 - Get push or pull transport stream video
 - add support for gif
+- add layer Images (Simple image combinaison, usefull for interactive item frame)
