@@ -33,3 +33,4 @@ command /test:
 - add support for gif
 - add layer Images (Simple image combinaison, usefull for interactive item frame)
 - place a marker at a location on mapview
+- convert a mapview to a bufferedimage
