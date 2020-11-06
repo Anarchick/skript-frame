@@ -1,5 +1,5 @@
 # skript-frame
-A skript addon for item frame and image stuff.
+A [**Skript**](https://github.com/SkriptLang/Skript) addon for item frame and image stuff.
 
 # NOTE
  - Since async skript effect does not allow to use temporal variable, it's recommanded to use global variable for storing images.
