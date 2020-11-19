@@ -18,7 +18,8 @@ import fr.anarchick.skriptframe.util.Utils;
 @Name("Block pixel")
 @Description("Return a vector of relative cursor's pixel position from target block face")
 @Examples({
-	"broadcast \"%the target block pixel of player%\""
+	"set {_vector} to target block pixel of player",
+	"broadcast \"X:%x component of {_vector}% and Y: %y component of {_vector}%\""
 })
 @Since("1.0")
 
@@ -65,7 +66,7 @@ public class ExprBlockPixel extends SimplePropertyExpression<Entity, Vector> {
 				x = Utils.fractional(x);
 				y = Utils.fractional(y);
 				if (face == BlockFace.NORTH || face == BlockFace.WEST) x = 1-x;
-				vector = new Vector(Math.floor(x*128), Math.floor(y*128), 0);
+				vector = new Vector(Math.floor(x*128), Math.floor(y*128), 0); // Pixels are in range of 0-128 to match with the definition of a map
 			}
 		}
 		return vector;

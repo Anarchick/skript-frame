@@ -17,7 +17,8 @@ public class FrameMapRenderer extends MapRenderer{
 		view.addRenderer(this);
 	}
 	
-	static public void drawImage(BufferedImage image, int id, MapView view) {		
+	// Only this method should be called
+	static public void drawImage(BufferedImage image, int id, MapView view) {
 		view.getRenderers().clear();
 		new FrameMapRenderer(image, id, view);
 	}

@@ -5,13 +5,18 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapCursor;
+import org.bukkit.map.MapPalette;
 
 import com.bergerkiller.bukkit.common.map.MapColorPalette;
 import com.bergerkiller.bukkit.common.map.MapDisplay;
@@ -21,6 +26,7 @@ import com.bergerkiller.bukkit.common.utils.PacketUtil;
 import com.bergerkiller.generated.net.minecraft.server.PacketPlayOutMapHandle;
 
 import fr.anarchick.skriptframe.SkriptFrame;
+import fr.anarchick.skriptframe.util.Utils;
 
 public class MapsManager {
 
@@ -46,6 +52,7 @@ public class MapsManager {
 	}
 	
 	static public BufferedImage resize(BufferedImage img, int w, int h) {
+		if (w < 0 || h < 0 ) return null;
 		BufferedImage resized = new BufferedImage(w, h, img.getType());
 	    Graphics2D g = resized.createGraphics();
 	    g.drawImage(img, 0, 0, w, h, null);
@@ -88,4 +95,37 @@ public class MapsManager {
 		return MapColorPalette.getRealColor(MapColorPalette.getColor(c));
 	}
 
+	// 58 * 4 values in 1.16
+	static private Color[] palette;
+	
+	static {
+		try {
+			Field field = MapPalette.class.getDeclaredField("colors");
+			field.setAccessible(true);
+			palette = (Color[]) field.get(null);
+		} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	static public Color[] getPalette() {
+		return palette;
+	}
+
+	
+	// Result can differ accross mc version
+	static public byte[] getByteColorMap(int id) {
+		byte[] colors = null;
+		World world = Bukkit.getServer().getWorlds().get(0);
+		try {
+			Object craftworld = Utils.getNmsClass("CraftWorld").getMethod("getHandle").invoke(world);
+			Object worldMap = craftworld.getClass().getMethod("a").invoke("map_"+id);
+			colors = (byte[]) worldMap.getClass().getDeclaredField("colors").get(null);
+		} catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException | NoSuchFieldException | SecurityException e) {
+			e.printStackTrace();
+		}
+		return colors;
+	}
+	
+	
 }

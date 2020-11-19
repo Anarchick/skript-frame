@@ -7,6 +7,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
@@ -17,11 +18,12 @@ import ch.njol.skript.util.ColorRGB;
 import ch.njol.util.Kleenean;
 import fr.anarchick.skriptframe.map.MapsManager;
 
-@Name("MC Color")
+@Name("MC color")
 @Description("Convert a color to the minecraft color palette")
 @Examples({
     "broadcast \"%mc color from rgb(128, 177, 57)% should return 127, 178, 56\""
 })
+@RequiredPlugins({"BKCommonLib"})
 @Since("1.0")
 
 public class ExprColorMC extends SimpleExpression<Color> {

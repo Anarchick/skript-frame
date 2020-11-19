@@ -21,9 +21,9 @@ import fr.anarchick.skriptframe.util.Utils;
 @Name("image Definition")
 @Description("Get the width or height of an image")
 @Examples({
-    "# /!\\ to resize an image you have to use the resize effect /!\\ \n" +
-	"set {image} to image from url \"https://i.imgur.com/fC0OOYE.png\"\n" +
-	"set {_subimage} to sub of image {image} from 0, 0 append 128, 128"
+    "# /!\\ to resize an image you have to use the resize effect /!\\",
+	"set {image} to image from url \"https://i.imgur.com/fC0OOYE.png\"",
+	"set {_subimage} to cropped image at (0, 0, 128 and 128) of image {image}"
 })
 @Since("1.0")
 
@@ -54,7 +54,7 @@ public class ExprImageSub extends SimpleExpression<BufferedImage> {
 	@Override
 	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parser) {
 		
-		if (matchedPattern == 1 ) {
+		if (matchedPattern == 0 ) {
 			crop = (Expression<Integer>) exprs[0];
 			image = (Expression<BufferedImage>) exprs[1];	
 		} else {
@@ -72,23 +72,20 @@ public class ExprImageSub extends SimpleExpression<BufferedImage> {
 	@Override
 	@Nullable
 	protected BufferedImage[] get(Event e) {
-		BufferedImage sub = null;
-		final BufferedImage img = image.getSingle(e);
-		if (crop != null) return null;
 		final Integer[] crops = crop.getArray(e);
-		if (crops.length < 4) return null;
-		final Integer x = crops[0];
-		final Integer y = crops[1];
-		final Integer w = crops[2];
-		final Integer h = crops[3];
-		if (!Utils.isAnyObjectNull(img, x, y, w, h) && x + w <= img.getWidth() && y + h <= img.getHeight() ) {
+		final BufferedImage img = image.getSingle(e);
+		if (Utils.isAnyObjectNull(crops, img) || crops.length < 4) return null;
+		final Integer x = crops[0],  y = crops[1],  w = crops[2],  h = crops[3];
+		if (x < 0 || y < 0 || w <= 0 || h <= 0) return null;
+		BufferedImage sub = null;
+		if (x + w <= img.getWidth() && y + h <= img.getHeight() ) {
 			try {
 				 sub = img.getSubimage(x, y, w, h);
 			} catch (RasterFormatException ex) {
 				Skript.exception(ex);
 			}
 		}
-		return (sub != null) ? new BufferedImage[] {sub} : null;
+		return new BufferedImage[] {sub};
 	}
 
 }

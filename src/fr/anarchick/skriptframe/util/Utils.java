@@ -2,6 +2,7 @@ package fr.anarchick.skriptframe.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -34,7 +35,7 @@ public class Utils {
 	    plrConnection.getClass().getMethod("sendPacket", getNmsClass("Packet")).invoke(plrConnection, packet);
 	}
 
-	static private HashMap<String, Class<?>> Classes = new HashMap<String, Class<?>>();
+	static private Map<String, Class<?>> Classes = new HashMap<String, Class<?>>();
 	
 	static public Class<?> getNmsClass(String nmsClassName) throws ClassNotFoundException {
 		return Classes.putIfAbsent(nmsClassName, Class.forName("net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + "." + nmsClassName));

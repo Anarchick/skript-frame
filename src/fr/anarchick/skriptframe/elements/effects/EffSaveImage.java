@@ -22,12 +22,12 @@ import ch.njol.util.Kleenean;
 @Name("Save image")
 @Description("Save an image as a file")
 @Examples({
-    "# /!\\ if the file already exist, it will be replaced /!\\ \n" +
-	"# /!\\ You can't use a local variable in this effect /!\\ \n" +
+    "# /!\\ if the file already exist, it will be replaced /!\\",
+	"# /!\\ You can't use a local variable in this effect /!\\",
 
-    "command download: <string> <string>\n" +
-        "\ttrigger:\n" +
-        	"\t\tset {image} to image from url arg-1\n" +
+    "command download: <string> <string>",
+        "\ttrigger:",
+        	"\t\tset {image} to image from url arg-1",
         	"\t\tsave image {image} at \"plugins/images/%arg-2%.png\""
 })
 @Since("1.0")

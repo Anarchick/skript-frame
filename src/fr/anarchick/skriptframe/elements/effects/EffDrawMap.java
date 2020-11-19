@@ -12,6 +12,7 @@ import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
 import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -25,9 +26,10 @@ import fr.anarchick.skriptframe.util.Utils;
 @Name("Draw image on map")
 @Description("Draw a given image (from URL or FILE) to a map item")
 @Examples({
-	"set {image} to image from url arg-1\n" +
+	"set {image} to image from url arg-1",
 	"draw image {image} to map 0"
 })
+@RequiredPlugins({"BKCommonLib"})
 @Since("1.0")
 
 public class EffDrawMap extends Effect {

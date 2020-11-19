@@ -19,9 +19,9 @@ import ch.njol.util.Kleenean;
 @Name("Image definition")
 @Description("Get the width or height of an image")
 @Examples({
-    "# /!\\ to resize an image you have to use the resize effect /!\\ \n" +
-	"set {_image} to image from url \"https://i.imgur.com/fC0OOYE.png\"\n" +
-	"broadcast \"/%width of {_image}%\""
+    "# /!\\ to resize an image you have to use the resize effect /!\\",
+	"set {_image} to image from url \"https://i.imgur.com/fC0OOYE.png\"",
+	"broadcast \"%width of {_image}%\""
 })
 @Since("1.0")
 
@@ -61,10 +61,8 @@ public class ExprImageDefinition extends SimpleExpression<Number> {
 	@Nullable
 	protected Number[] get(Event e) {
 		BufferedImage img = image.getSingle(e);
-		if (img != null) {
-			return new Number[] {((element == 0) ? img.getWidth() : img.getHeight())};
-		}
-		return null;
+		if (img == null) return null;
+		return new Number[] {((element == 0) ? img.getWidth() : img.getHeight())};
 	}
 
 }

@@ -47,8 +47,9 @@ public class SkriptFrame extends JavaPlugin {
 				Skript.exception(ex);
 			}
 		} else {
+			// Load all images related to mapId
 			File filesList[] = imagesDirectory.listFiles();
-			final Pattern pattern = Pattern.compile("map\\d+.png"); // Only support for PNG for now
+			final Pattern pattern = Pattern.compile("map\\d+.png"); // Only support PNG for now
 			final Pattern patternId = Pattern.compile("(\\d+)");
 		    Matcher matcherId;
 		    int id;

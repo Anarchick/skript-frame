@@ -22,7 +22,7 @@ import fr.anarchick.skriptframe.util.Utils;
 @Name("Resize image")
 @Description("Resize an image by given pixel definition")
 @Examples({
-	"set {image} to image from url arg-1\n" +
+	"set {image} to image from url arg-1",
 	"resize image {image} by 256 and 256"
 })
 @Since("1.0")
