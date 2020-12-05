@@ -14,7 +14,7 @@ public class Utils {
 	public String getNMS( ) {
 		return nms;
 	}
-	static public boolean isAnyObjectNull(Object... objects) {
+	public static boolean isAnyObjectNull(Object... objects) {
 	    for (Object o: objects) {
 	        if (o == null) {
 	            return true;
@@ -23,21 +23,21 @@ public class Utils {
 	    return false;
 	}
 	
-	static public Double fractional(Double n) {
+	public static Double fractional(Double n) {
 		n = Math.abs(n);
 		String doubleAsText = n.toString();
 		return Double.parseDouble("0."+doubleAsText.split("\\.")[1]);
 	}
 	
-	static public void sendPacket(Player player, Object packet) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, ClassNotFoundException {
+	public static void sendPacket(Player player, Object packet) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, ClassNotFoundException {
 		Object nmsPlayer = player.getClass().getMethod("getHandle").invoke(player);
 	    Object plrConnection = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
 	    plrConnection.getClass().getMethod("sendPacket", getNmsClass("Packet")).invoke(plrConnection, packet);
 	}
 
-	static private Map<String, Class<?>> Classes = new HashMap<String, Class<?>>();
+	private static Map<String, Class<?>> Classes = new HashMap<String, Class<?>>();
 	
-	static public Class<?> getNmsClass(String nmsClassName) throws ClassNotFoundException {
+	public static Class<?> getNmsClass(String nmsClassName) throws ClassNotFoundException {
 		return Classes.putIfAbsent(nmsClassName, Class.forName("net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3] + "." + nmsClassName));
 		/*
 		if ( Classes.containsKey(nmsClassName) == true) {

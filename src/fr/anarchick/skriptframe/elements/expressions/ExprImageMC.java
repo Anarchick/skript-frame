@@ -18,6 +18,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import fr.anarchick.skriptframe.SkriptFrame;
 
 @Name("Image to mc image")
 @Description("Convert an image to a mc image look")
@@ -31,8 +32,8 @@ import ch.njol.util.Kleenean;
 public class ExprImageMC extends SimpleExpression<BufferedImage> {
 
 	static {
-	       Skript.registerExpression(ExprImageMC.class, BufferedImage.class, ExpressionType.SIMPLE, "convert %~bufferedimage% as (mc|mine[ ]craft) image");
-	   }
+		if (SkriptFrame.getBKCSupport()) Skript.registerExpression(ExprImageMC.class, BufferedImage.class, ExpressionType.SIMPLE, "convert %~bufferedimage% as (mc|mine[ ]craft) image");
+    }
 	
 	private Expression<BufferedImage> image;
 	

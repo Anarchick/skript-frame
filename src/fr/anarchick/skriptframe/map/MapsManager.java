@@ -30,18 +30,18 @@ import fr.anarchick.skriptframe.util.Utils;
 
 public class MapsManager {
 
-	static public BufferedImage imageFile(String path) throws IOException {
+	public static BufferedImage imageFile(String path) throws IOException {
 		if (path == null) return null;
 		return (ImageIO.read(new File(path)));
 	}
 	
-	static public BufferedImage imageURL(String url) throws IOException {
+	public static BufferedImage imageURL(String url) throws IOException {
 		if (url == null) return null;
 		return (ImageIO.read(new URL(url)));
 	}
 	
 	// Async writing in the plugin's folder
-	static public void saveImage(BufferedImage img, int id) {
+	public static void saveImage(BufferedImage img, int id) {
 		new Thread(() -> {
 			try {
 				ImageIO.write(img, "png", new File(SkriptFrame.getImagesDirectory(), "map"+id+".png"));
@@ -51,8 +51,8 @@ public class MapsManager {
 		}).start();
 	}
 	
-	static public BufferedImage resize(BufferedImage img, int w, int h) {
-		if (w < 0 || h < 0 ) return null;
+	public static BufferedImage resize(BufferedImage img, int w, int h) {
+		if ((w < 0) || (h < 0)) return null;
 		BufferedImage resized = new BufferedImage(w, h, img.getType());
 	    Graphics2D g = resized.createGraphics();
 	    g.drawImage(img, 0, 0, w, h, null);
@@ -61,7 +61,7 @@ public class MapsManager {
 	}
 	
 	// Client side map from mapID
-	static public void sendMap(final Player[] players, final int id, final BufferedImage img) {
+	public static void sendMap(final Player[] players, final int id, final BufferedImage img) {
 		MapTexture texture = MapTexture.fromImage(img);
 		PacketPlayOutMapHandle packet = PacketPlayOutMapHandle.createNew();
 		packet.setItemId(id);
@@ -79,7 +79,7 @@ public class MapsManager {
         }
 	}
 	
-	static public void sendMap(BufferedImage img, Player[] players) {
+	public static void sendMap(BufferedImage img, Player[] players) {
 		ItemStack item = MapDisplay.createMapItem(SkriptFrame.getInstance(), FrameMapDisplay.class);
 		ItemUtil.getMetaTag(item).putValue("imagePath", "some/url/path.png");;
 		for (Player player : players) {
@@ -87,16 +87,16 @@ public class MapsManager {
 		}	
 	}
 	
-	static public Color matchColor(int r, int g, int b) {
+	public static Color matchColor(int r, int g, int b) {
 		return MapColorPalette.getRealColor(MapColorPalette.getColor(r, g, b));
 	}
 	
-	static public Color matchColor(Color c) {
+	public static Color matchColor(Color c) {
 		return MapColorPalette.getRealColor(MapColorPalette.getColor(c));
 	}
 
 	// 58 * 4 values in 1.16
-	static private Color[] palette;
+	private static Color[] palette;
 	
 	static {
 		try {
@@ -108,13 +108,13 @@ public class MapsManager {
 		}
 	}
 	
-	static public Color[] getPalette() {
+	public static Color[] getPalette() {
 		return palette;
 	}
 
 	
 	// Result can differ accross mc version
-	static public byte[] getByteColorMap(int id) {
+	public static byte[] getByteColorMap(int id) {
 		byte[] colors = null;
 		World world = Bukkit.getServer().getWorlds().get(0);
 		try {

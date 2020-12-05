@@ -17,6 +17,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.Color;
 import ch.njol.skript.util.ColorRGB;
 import ch.njol.util.Kleenean;
+import fr.anarchick.skriptframe.SkriptFrame;
 import fr.anarchick.skriptframe.map.MapsManager;
 
 @Name("MC colors palette")
@@ -28,8 +29,9 @@ import fr.anarchick.skriptframe.map.MapsManager;
 
 public class ExprColorMCPalette extends SimpleExpression<Color> {
 
-	static private final Color[] palette;
+	private static Color[] palette;
 	static {
+		if (SkriptFrame.getBKCSupport()) {
 	       Skript.registerExpression(ExprColorMCPalette.class, Color.class, ExpressionType.SIMPLE, "all (mc|mine[ ]craft) colors palette");
 	       
 	       ArrayList<Color> skriptColor = new ArrayList<Color>();
@@ -37,7 +39,8 @@ public class ExprColorMCPalette extends SimpleExpression<Color> {
 	    	   skriptColor.add(new ColorRGB(color.getRed(), color.getGreen(), color.getBlue()));
 	       }
 	       palette = skriptColor.toArray(new Color[0]);
-	   }
+		}
+	}
 	
 	@Override
 	public Class<? extends Color> getReturnType() {

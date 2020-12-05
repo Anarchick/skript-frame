@@ -27,10 +27,10 @@ import fr.anarchick.skriptframe.util.Utils;
 })
 @Since("1.0")
 
-public class EffResizeImage extends Effect {
+public class EffImageResize extends Effect {
 
 	static {
-		Skript.registerEffect(EffResizeImage.class, "resize image %~bufferedimage% by %integer% and %integer%");
+		Skript.registerEffect(EffImageResize.class, "resize image %~bufferedimage% by %integer% and %integer%");
     }
 	
 	private Expression<BufferedImage> image;
@@ -56,7 +56,7 @@ public class EffResizeImage extends Effect {
 		final BufferedImage img = image.getSingle(e);
 		final Integer _w = w.getSingle(e);
 		final Integer _h = h.getSingle(e);
-		if (Utils.isAnyObjectNull(img, _w, _h) || _w <= 0 || _h <= 0) return;
+		if (Utils.isAnyObjectNull(img, _w, _h) || (_w <= 0) || (_h <= 0)) return;
 		final BufferedImage resized = MapsManager.resize(img, _w, _h);
 	    image.change(e, CollectionUtils.array(resized), ChangeMode.SET);
 		}

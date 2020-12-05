@@ -27,8 +27,8 @@ import fr.anarchick.skriptframe.map.MapsManager;
 public class ExprImageFile extends SimpleExpression<BufferedImage> {
 
 	static {
-	       Skript.registerExpression(ExprImageFile.class, BufferedImage.class, ExpressionType.SIMPLE, "[the] image [from] file %string%");
-	   }
+       Skript.registerExpression(ExprImageFile.class, BufferedImage.class, ExpressionType.SIMPLE, "[the] image [from] file %string%");
+    }
 	
 	private Expression<String> path;
 	

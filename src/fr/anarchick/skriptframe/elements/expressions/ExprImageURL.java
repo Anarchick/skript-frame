@@ -16,6 +16,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import fr.anarchick.skriptframe.SkriptFrame;
 import fr.anarchick.skriptframe.map.MapsManager;
 
 @Name("Image URL")
@@ -28,8 +29,8 @@ import fr.anarchick.skriptframe.map.MapsManager;
 public class ExprImageURL extends SimpleExpression<BufferedImage> {
 
 	static {
-	       Skript.registerExpression(ExprImageURL.class, BufferedImage.class, ExpressionType.SIMPLE, "[the] image [from] url %string%");
-	   }
+		if (SkriptFrame.getBKCSupport()) Skript.registerExpression(ExprImageURL.class, BufferedImage.class, ExpressionType.SIMPLE, "[the] image [from] url %string%");
+    }
 	
 	private Expression<String> url;
 	

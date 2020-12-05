@@ -29,13 +29,13 @@ import fr.anarchick.skriptframe.util.Utils;
 
 public class ExprImageSub extends SimpleExpression<BufferedImage> {
 
-	final private static String[] patterns = new String[] {
+	private static final String[] patterns = new String[] {
 			"[the] (trimmed|cropped|clipped) image at %integers% of image %~bufferedimage%",
 			"[the] image %~bufferedimage%'s (trimmed|cropped|clipped) image at %integers%"};
 	
 	static {
-	       Skript.registerExpression(ExprImageSub.class, BufferedImage.class, ExpressionType.COMBINED, patterns);
-	   }
+       Skript.registerExpression(ExprImageSub.class, BufferedImage.class, ExpressionType.COMBINED, patterns);
+    }
 	
 	private Expression<BufferedImage> image;
 	private Expression<Integer> crop;
@@ -74,11 +74,11 @@ public class ExprImageSub extends SimpleExpression<BufferedImage> {
 	protected BufferedImage[] get(Event e) {
 		final Integer[] crops = crop.getArray(e);
 		final BufferedImage img = image.getSingle(e);
-		if (Utils.isAnyObjectNull(crops, img) || crops.length < 4) return null;
+		if ((Utils.isAnyObjectNull(crops, img)) || (crops.length < 4)) return null;
 		final Integer x = crops[0],  y = crops[1],  w = crops[2],  h = crops[3];
 		if (x < 0 || y < 0 || w <= 0 || h <= 0) return null;
 		BufferedImage sub = null;
-		if (x + w <= img.getWidth() && y + h <= img.getHeight() ) {
+		if ((x + w <= img.getWidth()) && (y + h <= img.getHeight())) {
 			try {
 				 sub = img.getSubimage(x, y, w, h);
 			} catch (RasterFormatException ex) {

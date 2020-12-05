@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 
 import org.bukkit.Bukkit;
 import org.bukkit.map.MapView;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.njol.skript.Skript;
@@ -19,22 +21,27 @@ import fr.anarchick.skriptframe.map.MapsManager;
 
 public class SkriptFrame extends JavaPlugin {
 
-	static private SkriptFrame instance;
-	static private SkriptAddon addon;
+	private static SkriptFrame instance;
+	private static SkriptAddon addon;
 	
-	static private final String IMAGES_DIRECTORY_NAME = "images";
+	private static final String IMAGES_DIRECTORY_NAME = "images";
 	private static File imagesDirectory;
+	private static boolean isBKCommonLib = false;
 	
 	public void onEnable() {
 		if(instance != null)
             throw new IllegalStateException("Plugin initialized twice.");
 		instance = this;
 		addon = Skript.registerAddon(this);
+		PluginManager pluginManager = Bukkit.getPluginManager();
+		Plugin bkc = pluginManager.getPlugin("BKCommonLib");
+		if (bkc != null) isBKCommonLib = bkc.isEnabled();
+		if (isBKCommonLib) Bukkit.getLogger().info("[Skript-Frame] support of BKCommonLIB syntaxes");
 		try {
 			addon.loadClasses("fr.anarchick.skriptframe", "elements");
 		} catch (IOException e) {
 			e.printStackTrace();
-			Bukkit.getPluginManager().disablePlugin(this);
+			pluginManager.disablePlugin(this);
             return;
 		}
 		
@@ -68,7 +75,7 @@ public class SkriptFrame extends JavaPlugin {
 					@SuppressWarnings("deprecation")
 					MapView view = Bukkit.getMap(id);
 					if (view != null) {
-						if (image.getWidth() != 128 || image.getHeight() != 128) {
+						if ((image.getWidth() != 128) || (image.getHeight() != 128)) {
 							image = MapsManager.resize(image, 128, 128);
 						}
 						FrameMapRenderer.drawImage(image, id, view);
@@ -76,11 +83,11 @@ public class SkriptFrame extends JavaPlugin {
 					}
 				}
 			}
-			Skript.info("Amount of loaded frames: " + loaded);
+			Skript.info("[Skript-Frame] Amount of loaded frames: " + loaded);
 				
 		}
 		
-		Bukkit.getLogger().info("[Skript-Frame] has been enabled!");
+		Bukkit.getLogger().info("[Skript-Frame] is enable!");
 		
 		/*
 		Data data = Data.loadData("idcounts.dat");
@@ -99,6 +106,10 @@ public class SkriptFrame extends JavaPlugin {
 	
 	static public File getImagesDirectory() {
 		return imagesDirectory;
+	}
+	
+	static public boolean getBKCSupport() {
+		return isBKCommonLib;
 	}
 	
 }

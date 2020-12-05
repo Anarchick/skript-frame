@@ -26,8 +26,8 @@ import fr.anarchick.skriptframe.util.Utils;
 public class ExprBlockPixel extends SimplePropertyExpression<Entity, Vector> {
 
 	static {
-	       register(ExprBlockPixel.class, Vector.class, "target block pixel", "entity");
-	   }
+		register(ExprBlockPixel.class, Vector.class, "target block pixel", "entity");
+	}
 
 	@Override
 	public Class<? extends Vector> getReturnType() {
@@ -65,7 +65,7 @@ public class ExprBlockPixel extends SimplePropertyExpression<Entity, Vector> {
 				}
 				x = Utils.fractional(x);
 				y = Utils.fractional(y);
-				if (face == BlockFace.NORTH || face == BlockFace.WEST) x = 1-x;
+				if ((face == BlockFace.NORTH) || (face == BlockFace.WEST)) x = 1-x;
 				vector = new Vector(Math.floor(x*128), Math.floor(y*128), 0); // Pixels are in range of 0-128 to match with the definition of a map
 			}
 		}

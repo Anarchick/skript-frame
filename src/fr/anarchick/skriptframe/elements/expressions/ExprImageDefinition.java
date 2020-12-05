@@ -28,8 +28,8 @@ import ch.njol.util.Kleenean;
 public class ExprImageDefinition extends SimpleExpression<Number> {
 
 	static {
-	       Skript.registerExpression(ExprImageDefinition.class, Number.class, ExpressionType.SIMPLE, "[the] (0安idth|1多eight) of image %~bufferedimage%");
-	   }
+		Skript.registerExpression(ExprImageDefinition.class, Number.class, ExpressionType.SIMPLE, "[the] (0安idth|1多eight) of image %~bufferedimage%");
+	}
 	
 	private Expression<BufferedImage> image;
 	private int element;

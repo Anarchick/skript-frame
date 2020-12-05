@@ -17,6 +17,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.Color;
 import ch.njol.util.Kleenean;
+import fr.anarchick.skriptframe.SkriptFrame;
 
 @Name("MC color ID")
 @Description("Convert a color to the minecraft color palette ID")
@@ -31,8 +32,8 @@ import ch.njol.util.Kleenean;
 public class ExprColorMCID extends SimpleExpression<Number> {
 
 	static {
-	       Skript.registerExpression(ExprColorMCID.class, Number.class, ExpressionType.SIMPLE, "[the] (mc|mine[ ]craft) color id from %color%");
-	   }
+		if (SkriptFrame.getBKCSupport()) Skript.registerExpression(ExprColorMCID.class, Number.class, ExpressionType.SIMPLE, "[the] (mc|mine[ ]craft) color id from %color%");
+    }
 	
 	private Expression<Color> color;
 	

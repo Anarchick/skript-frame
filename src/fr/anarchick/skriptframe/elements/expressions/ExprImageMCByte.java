@@ -18,6 +18,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import fr.anarchick.skriptframe.SkriptFrame;
 
 @Name("Image to mc palette ID")
 @Description({
@@ -35,8 +36,8 @@ import ch.njol.util.Kleenean;
 public class ExprImageMCByte extends SimpleExpression<Number> {
 
 	static {
-	       Skript.registerExpression(ExprImageMCByte.class, Number.class, ExpressionType.SIMPLE, "convert %~bufferedimage% as (mc|mine[ ]craft) palette id (0¦signed|1¦unsigned)");
-	   }
+		if (SkriptFrame.getBKCSupport()) Skript.registerExpression(ExprImageMCByte.class, Number.class, ExpressionType.SIMPLE, "convert %~bufferedimage% as (mc|mine[ ]craft) palette id (0¦signed|1¦unsigned)");
+    }
 	
 	private Expression<BufferedImage> image;
 	private int element;

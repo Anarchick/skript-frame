@@ -18,6 +18,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import fr.anarchick.skriptframe.SkriptFrame;
 //import fr.anarchick.skriptframe.map.CustomMapView;
 import fr.anarchick.skriptframe.map.FrameMapRenderer;
 import fr.anarchick.skriptframe.map.MapsManager;
@@ -32,14 +33,14 @@ import fr.anarchick.skriptframe.util.Utils;
 @RequiredPlugins({"BKCommonLib"})
 @Since("1.0")
 
-public class EffDrawMap extends Effect {
+public class EffMapDraw extends Effect {
 
-	final private static String[] patterns = new String[] {
+	private static final String[] patterns = new String[] {
 			"draw image %~bufferedimage% to map %integer%",
 			"draw image %~bufferedimage% to map %integer% for %players%"};
 	
 	static {
-		Skript.registerEffect(EffDrawMap.class, patterns);
+		if (SkriptFrame.getBKCSupport()) Skript.registerEffect(EffMapDraw.class, patterns);
     }
 	
 	private Expression<BufferedImage> image;
@@ -67,7 +68,7 @@ public class EffDrawMap extends Effect {
 		BufferedImage img = image.getSingle(e);
 		final Integer _id = id.getSingle(e);
 		if (Utils.isAnyObjectNull(img, _id)) return;
-		if (img.getWidth() != 128 || img.getHeight() != 128) {
+		if ((img.getWidth() != 128) || (img.getHeight() != 128)) {
 			img = MapsManager.resize(img, 128, 128);
 		}
 		// if client side

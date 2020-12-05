@@ -32,10 +32,10 @@ import ch.njol.util.Kleenean;
 })
 @Since("1.0")
 
-public class EffSaveImage extends AsyncEffect {
+public class EffImageSave extends AsyncEffect {
 
 	static {
-		Skript.registerEffect(EffSaveImage.class, "(save|write) image %~bufferedimage% at %string%");
+		Skript.registerEffect(EffImageSave.class, "(save|write) image %~bufferedimage% at %string%");
     }
 	
 	private Expression<BufferedImage> image;
@@ -58,7 +58,7 @@ public class EffSaveImage extends AsyncEffect {
 	protected void execute(Event e) {
 		BufferedImage img = image.getSingle(e);
 		String p = path.getSingle(e);
-		if (img != null || p != null) {
+		if ((img != null) || (p != null)) {
 			// Only PNG is supported for now
 			String format = "png";
 			try {

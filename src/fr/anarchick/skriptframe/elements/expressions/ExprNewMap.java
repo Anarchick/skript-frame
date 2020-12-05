@@ -31,8 +31,8 @@ import fr.anarchick.skriptframe.map.FrameMapDisplay;
 public class ExprNewMap extends SimpleExpression<ItemStack> {
 
 	static {
-	       Skript.registerExpression(ExprNewMap.class, ItemStack.class, ExpressionType.SIMPLE, "new map item");
-	   }
+		if (SkriptFrame.getBKCSupport()) Skript.registerExpression(ExprNewMap.class, ItemStack.class, ExpressionType.SIMPLE, "new map item");
+    }
 	
 	@Override
 	public Class<? extends ItemStack> getReturnType() {

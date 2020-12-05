@@ -16,6 +16,7 @@ import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.skript.util.Color;
 import ch.njol.skript.util.ColorRGB;
 import ch.njol.util.Kleenean;
+import fr.anarchick.skriptframe.SkriptFrame;
 import fr.anarchick.skriptframe.map.MapsManager;
 
 @Name("MC color")
@@ -29,8 +30,8 @@ import fr.anarchick.skriptframe.map.MapsManager;
 public class ExprColorMC extends SimpleExpression<Color> {
 
 	static {
-	       Skript.registerExpression(ExprColorMC.class, Color.class, ExpressionType.SIMPLE, "[the] (mc|mine[ ]craft) color from %color%");
-	   }
+		if (SkriptFrame.getBKCSupport()) Skript.registerExpression(ExprColorMC.class, Color.class, ExpressionType.SIMPLE, "[the] (mc|mine[ ]craft) color from %color%");
+    }
 	
 	private Expression<Color> color;
 	
